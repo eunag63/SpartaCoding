@@ -38,17 +38,21 @@
             border: 2px solid black;
             border-radius: 5px;
             padding: 30px;
+
+            display: none;
         }
     </style>
     <script>
-        let count = 1;
-        function hey() {
-            if (count % 2 == 0){
-                alert('짝수입니다!')
+        function openclose(){
+            let status = $('#post-box').css('display');
+            if (status == 'block'){
+                $('#post-box').hide();
+                $('#btn-posting-box').text('포토박스 열기');
+
             }else{
-                alert('홀수입니다!')
+                $('#post-box').show();
+                 $('#btn-posting-box').text('포토박스 닫기');
             }
-            count += 1;
         }
     </script>
 </head>
@@ -61,7 +65,7 @@
         <hr class="my-4">
         <!--        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>-->
         <p class="lead">
-            <a onclick="hey()" id="btn-posting-box" class="btn btn-primary btn-lg" href="#" role="button">포토박스 열기</a>
+            <a onclick="openclose()" id="btn-posting-box" class="btn btn-primary btn-lg" href="#" role="button">포토박스 열기</a>
         </p>
     </div>
     <div class="box" id="post-box">
