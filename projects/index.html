@@ -37,14 +37,40 @@
         span {
             font-size: 20px;
         }
-        .btn{
+
+        .btn {
             margin: auto;
             display: block;
         }
-        h3{
+
+        h3 {
             font-family: 'Nanum Myeongjo', serif;
         }
+        #show_rate{
+            color: darkorange;
+            font-weight: bold;
+        }
     </style>
+    <script>
+        $(document).ready(function () {
+            q1();
+        });
+
+        function q1() {
+            $.ajax({
+                type: "GET",
+                url: "http://spartacodingclub.shop/sparta_api/rate",
+                data: {},
+                success: function (response) {
+                    let rates = response['rate']
+                    let temp_html = `<p>달러 - 원 환율 : ${rates} </p>`
+                    $('#show_rate').append(temp_html)
+                }
+            })
+        }
+
+
+    </script>
 </head>
 
 <body>
@@ -53,9 +79,10 @@
         <img class="img" src="https://tgzzmmgvheix1905536.cdn.ntruss.com/2020/03/c320a089abe34b72942aeecc9b568295"
              alt="Card image cap">
         <div class="card-body">
-            <h3 class="card-title" >강아지 자랑합니다 <span>가격: 측정불가 </span></h3>
+            <h3 class="card-title">강아지 자랑합니다 <span>가격: 측정불가 </span></h3>
             <p class="card-text">우리 집 코기 귀여워서 자랑합니다. 너무 귀여워요. 원래 고양이파였는데 코기 키우고 나서는 완전한 강아지파가 되었습니다. 근데 요즘 장마여서 코기 산책시키기
                 너무 힘들다.. 날씨가 참 눈치가 없죠?</p>
+            <div id="show_rate"></div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">주문자 이름</span>
