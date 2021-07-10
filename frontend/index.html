@@ -43,15 +43,51 @@
         }
     </style>
     <script>
-        function openclose(){
+        $(document).ready(function () {
+            $('#cards-box').empty();
+            listing();
+        });
+
+        function listing() {
+            $.ajax({
+                type: "GET",
+                url: "http://spartacodingclub.shop/post",
+                data: {},
+                success: function (response) {
+                    let rows = response['articles']
+                    for (let i = 0; i < rows.length; i++) {
+                        let comment = rows[i]['comment']
+                        let desc = rows[i]['desc']
+                        let image = rows[i]['image']
+                        let title = rows[i]['title']
+                        let url = rows[i]['url']
+
+                        let temp_html = `<div class="card">
+                                            <img class="card-img-top"
+                                                 src="${image}"
+                                                 alt="Card image cap">
+                                            <div class="card-body">
+                                                <h5 class="card-title"><a href="${url}">${title}</a></h5>
+                                                <p class="card-text">${desc}</p>
+                                                <p class="blue">${comment}</p>
+                                            </div>
+                                        </div>`
+                        $('#cards-box').append(temp_html)
+                    }
+                }
+            })
+
+        }
+
+        function openclose() {
             let status = $('#post-box').css('display');
-            if (status == 'block'){
+            if (status == 'block') {
                 $('#post-box').hide();
                 $('#btn-posting-box').text('포토박스 열기');
 
-            }else{
+            } else {
                 $('#post-box').show();
-                 $('#btn-posting-box').text('포토박스 닫기');
+                $('#btn-posting-box').text('포토박스 닫기');
             }
         }
     </script>
@@ -65,7 +101,8 @@
         <hr class="my-4">
         <!--        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>-->
         <p class="lead">
-            <a onclick="openclose()" id="btn-posting-box" class="btn btn-primary btn-lg" href="#" role="button">포토박스 열기</a>
+            <a onclick="openclose()" id="btn-posting-box" class="btn btn-primary btn-lg" href="#" role="button">포토박스
+                열기</a>
         </p>
     </div>
     <div class="box" id="post-box">
