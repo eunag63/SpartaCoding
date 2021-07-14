@@ -9,10 +9,14 @@ soup = BeautifulSoup(data.text, 'html.parser')
 #old_content > table > tbody > tr:nth-child(2)
 #old_content > table > tbody > tr
 trs = soup.select('#old_content > table > tbody > tr')
-#old_content > table > tbody > tr:nth-child(2) >
+#old_content > table > tbody > tr:nth-child(2) > td.title > div > a
+#old_content > table > tbody > tr:nth-child(2) > td:nth-child(1) > img
+#old_content > table > tbody > tr:nth-child(2) > td.point
 for tr in trs:
     a_tag = tr.select_one('td.title > div > a')
     if a_tag is not None:
         title = a_tag.text
-        print(title)
+        rank = tr.select_one('td:nth-child(1) > img')['alt']
+        point = tr.select_one('td.point').text
+        print(rank,title,point)
 
