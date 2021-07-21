@@ -50,6 +50,9 @@
             color: darkorange;
             font-weight: bold;
         }
+        .reviews{
+            margin-top: 100px;
+        }
     </style>
     <script>
         $(document).ready(function () {
@@ -81,7 +84,18 @@
                 success: function (response) {
                     let orders = response['all_orders']
                     for (let i = 0; i < orders.length; i++){
+                        let name = orders[i]['name']
+                        let quantity = orders[i]['quantity']
+                        let address = orders[i]['address']
+                        let phone = orders[i]['phone']
 
+                        let temp_html =`<tr>
+                                            <td>${name}</td>
+                                            <td>${quantity}</td>
+                                            <td>${address}</td>
+                                            <td>${phone}</td>
+                                        </tr>`
+                        $('#box').append(temp_html)
                     }
 
                 }
@@ -146,6 +160,25 @@
             </div>
             <div class="btn">
                 <input onclick="show()" class="btn btn-primary" type="reset" value="주문하기">
+            </div>
+
+            <div class="reviews">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="co1">주문자</th>
+                        <th scope="co1">수량</th>
+                        <th scope="co1">주소</th>
+                        <th scope="co1">전화번호</th>
+                    </tr>
+                    </thead>
+                    <tbody id="box">
+
+                    </tbody>
+
+                </table>
+
+
             </div>
 
 
