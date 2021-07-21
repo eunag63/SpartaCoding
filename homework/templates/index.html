@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <title>스파르타코딩클럽 | 부트스트랩 연습하기</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@800&display=swap" rel="stylesheet">
+    <style>
+        .wrap {
+            width: 900px;
+            margin: auto;
+
+        }
+
+        .card {
+            width: 500px;
+            margin: 20px auto 20px auto;
+        }
+
+        span {
+            font-size: 20px;
+        }
+
+        .btn {
+            margin: auto;
+            display: block;
+        }
+
+        h3 {
+            font-family: 'Nanum Myeongjo', serif;
+        }
+        #show_rate{
+            color: darkorange;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            q1();
+        });
+
+        function show() {
+            let name = $('#name').val()
+            let quantity = $('#inputGroupSelect01').val()
+            let address = $('#address').val()
+            let phone = $('#phone').val()
+
+            $.ajax({
+                    type: "POST",
+                    url: "/order",
+                    data: {name_give:name, quantity_give:quantity, address_give:address, phone_give:phone},
+                    success: function (response) {
+                        alert(response["msg"]);
+                        window.location.reload();
+                    }
+                })
+        }
+
+        function q1() {
+            $.ajax({
+                type: "GET",
+                url: "/order",
+                data: {},
+                success: function (response) {
+                    let orders = response['all_orders']
+                    console.log(orders)
+
+                }
+            })
+            $.ajax({
+                type: "GET",
+                url: "http://spartacodingclub.shop/sparta_api/rate",
+                data: {},
+                success: function (response) {
+                    let rates = response['rate']
+                    let temp_html = `<p>달러 - 원 환율 : ${rates} </p>`
+                    $('#show_rate').append(temp_html)
+                }
+            })
+        }
+
+
+    </script>
+</head>
+
+<body>
+<div class="wrap">
+    <div class="card">
+        <img class="img" src="https://tgzzmmgvheix1905536.cdn.ntruss.com/2020/03/c320a089abe34b72942aeecc9b568295"
+             alt="Card image cap">
+        <div class="card-body">
+            <h3 class="card-title">강아지 자랑합니다 <span>가격: 측정불가 </span></h3>
+            <p class="card-text">우리 집 코기 귀여워서 자랑합니다. 너무 귀여워요. 원래 고양이파였는데 코기 키우고 나서는 완전한 강아지파가 되었습니다. 근데 요즘 장마여서 코기 산책시키기
+                너무 힘들다.. 날씨가 참 눈치가 없죠?</p>
+            <div id="show_rate"></div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">주문자 이름</span>
+                </div>
+                <input type="text" class="form-control" placeholder="" aria-label="Username"
+                       aria-describedby="basic-addon1" id="name">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">수량</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01">
+                    <option selected>--수량 입력하지 마세요--</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">주소</span>
+                </div>
+                <input type="text" class="form-control" placeholder="" aria-label="Username"
+                       aria-describedby="basic-addon1" id="address">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">전화번호</span>
+                </div>
+                <input type="text" class="form-control" placeholder="" aria-label="Username"
+                       aria-describedby="basic-addon1" id="phone">
+            </div>
+            <div class="btn">
+                <input onclick="show()" class="btn btn-primary" type="reset" value="주문하기">
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>
