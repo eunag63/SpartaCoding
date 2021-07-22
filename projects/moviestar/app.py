@@ -23,9 +23,13 @@ def show_stars():
 
 @app.route('/api/like', methods=['POST'])
 def like_star():
-    sample_receive = request.form['sample_give']
-    print(sample_receive)
-    return jsonify({'msg': 'like 연결되었습니다!'})
+    name_receive = request.form['name_give']
+    target_star = db.mystar.find_one({'name': name_receive})
+    current_like = target_star['like']
+    new_like = current_like + 1
+
+    db.mystar.update_one({'name': name_receive}, {'$set': {'like': new_like}})
+    return jsonify({'msg': 'like'})
 
 
 @app.route('/api/delete', methods=['POST'])
