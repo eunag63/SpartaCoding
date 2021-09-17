@@ -30,6 +30,7 @@
                 showReview();
             });
 
+            // 보내주기
             function makeReview() {
                 let title = $('#title').val()
                 let author = $('#author').val()
@@ -46,17 +47,21 @@
                 })
             }
 
+            // 보여주기
             function showReview() {
                 $.ajax({
                     type: "GET",
                     url: "/review",
                     data: {},
                     success: function (response) {
+                        // DB 정보가 딤긴 all_review를 reviews에 담아주기
                         let reviews = response['all_reviews']
                         for (let i = 0; i < reviews.length; i++){
                             let title = reviews[i]['title']
                             let author = reviews[i]['author']
                             let review = reviews[i]['review']
+
+                            // console.log(title, author, review)
 
                             let temp_html = `
                                             <tr>
